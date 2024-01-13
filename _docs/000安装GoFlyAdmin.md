@@ -20,6 +20,9 @@ fresh
 ## 
 ```
 
+## 安装截图
+http://172.16.224.146:8105/common/install/index
+![初始化安装](img.png)
 ```shell
 ## A端和B端账号
 ## 账号
