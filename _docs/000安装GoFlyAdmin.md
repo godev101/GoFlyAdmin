@@ -18,6 +18,10 @@ go install github.com/pilu/fresh@latest
 fresh
 ## 
 ## 
+go get github.com/gohouse/gorose/v2@v2.1.12
+## 
+## 
+## 
 ```
 
 ## 安装截图

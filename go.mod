@@ -10,7 +10,7 @@ require (
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-sql-driver/mysql v1.6.0
-	github.com/gohouse/gorose/v2 v2.1.5
+	github.com/gohouse/gorose/v2 v2.1.12
 	github.com/json-iterator/go v1.1.12
 	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/spf13/viper v1.13.0
@@ -27,7 +27,8 @@ require (
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.10.0 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
-	github.com/gohouse/golib v0.0.0-20200227070740-c868bc352ec6 // indirect
+	github.com/gohouse/golib v0.0.0-20210711163732-a5c22059eb75 // indirect
+	github.com/gohouse/t v0.0.0-20201007094014-630049a6bfe9 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
