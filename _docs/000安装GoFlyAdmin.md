@@ -15,6 +15,7 @@
 ## 
 ## 3、fresh
 go install github.com/pilu/fresh@latest
+## 默认加载runner.conf，也可以fresh -c other_runner.conf
 fresh
 ## 
 ## 
