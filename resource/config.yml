@@ -8,7 +8,7 @@ dbconf:
      #用户名
      username: root
      #密码
-     password: root
+     password: godev
      #数据库名
      database: gofly_admin
      #数据表前缀
