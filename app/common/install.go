@@ -64,6 +64,14 @@ func (api *Install) Save(c *gin.Context) {
 		return
 	}
 	model.CreateDataBase(parameter["username"], parameter["password"], parameter["hostname"], parameter["hostport"], parameter["database"])
+
+	//2.修改数据库配置
+	cferr := upConfFieldData(path, parameter)
+	if cferr != nil {
+		results.Failed(c, "修改数据库配置失败", nil)
+		return
+	}
+
 	model.MyInit(2) //初始化数据
 	//导入书库配置
 	SqlPath := filepath.Join(path, "/resource/staticfile/template/gofly_base.sql")
@@ -112,12 +120,6 @@ func (api *Install) Save(c *gin.Context) {
 		os.RemoveAll(admin_vue_path)
 	}
 	results.Success(c, "安装成功,去前端刷新试试！", parameter, nil)
-	//2.修改数据库配置
-	cferr := upConfFieldData(path, parameter)
-	if cferr != nil {
-		results.Failed(c, "修改数据库配置失败", nil)
-		return
-	}
 }
 
 // 更新配置文件
