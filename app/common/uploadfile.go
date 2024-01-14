@@ -165,8 +165,8 @@ func getLastFrame(url string, path string, ffmpegPath string) string {
 // 3.显示图片
 func (api *Uploadfile) Get_image(c *gin.Context) {
 	imageName := c.Query("url")
-	imgrul := strings.Split(imageName, "?")
-	c.File(imgrul[0])
+	imgUrl := strings.Split(imageName, "?")
+	c.File(imgUrl[0])
 }
 
 // 4.显示图片base64

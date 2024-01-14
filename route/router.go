@@ -34,7 +34,8 @@ func InitRouter() *gin.Engine {
 	// a.1.前端项目静态资源
 	// R.StaticFile("/favicon.ico", "./resource/webadmin/favicon.ico")
 	//a.2.附件访问
-	R.Static("/resource", "./resource")
+	//R.Static("/resource", "./resource") 危险操作，会暴露gofly_base.sql和config.yml
+	R.Static("/resource/uploads", "./resource/uploads")
 	//a.3.业务后台
 	R.Static("/webadmin", "./resource/webadmin")
 	R.Static("/webbusiness", "./resource/webbusiness")
