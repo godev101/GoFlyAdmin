@@ -1,6 +1,6 @@
 package config
 
-//数据数据库配置
+// 数据数据库配置
 type DBconf struct {
 	Driver   string `yaml:"driver"`
 	Hostname string `yaml:"hostname"`
@@ -11,7 +11,7 @@ type DBconf struct {
 	Prefix   string `yaml:"prefix"`
 }
 
-//应用配置
+// 应用配置
 type App struct {
 	Port              string `yaml:"port"`
 	Version           string `yaml:"version"`
@@ -23,6 +23,8 @@ type App struct {
 	Domain            string `yaml:"domain"`
 	Vueobjroot        string `yaml:"vueobjroot"`
 	Rootview          string `yaml:"rootview"`
+	WebadminView      string `yaml:"webadminView"`
+	WebbusinessView   string `yaml:"webbusinessView"`
 	RunlogType        string `yaml:"runlogtype"`
 	NoVerifyTokenRoot string `yaml:"noVerifyTokenRoot"`
 	NoVerifyAPIRoot   string `yaml:"noVerifyAPIRoot"`
@@ -30,13 +32,13 @@ type App struct {
 	NoVerifyAPI       string `yaml:"noVerifyAPI"`
 }
 
-//JWT验证
+// JWT验证
 type Jwt struct {
 	Secret string `mapstructure:"secret" json:"secret" yaml:"secret"`
 	JwtTtl int64  `mapstructure:"jwt_ttl" json:"jwt_ttl" yaml:"jwt_ttl"` // token 有效期（秒）
 }
 
-//日志文件
+// 日志文件
 type Log struct {
 	Level      string `mapstructure:"level" json:"level" yaml:"level"`
 	RootDir    string `mapstructure:"root_dir" json:"root_dir" yaml:"root_dir"`
