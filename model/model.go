@@ -18,6 +18,13 @@ func MyInit(starType interface{}) {
 	global.App.Config.InitializeConfig()
 	dsbSource := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local&timeout=1000ms", global.App.Config.DBconf.Username, global.App.Config.DBconf.Password, global.App.Config.DBconf.Hostname, global.App.Config.DBconf.Hostport, global.App.Config.DBconf.Database)
 	engin, err = gorose.Open(&gorose.Config{Driver: global.App.Config.DBconf.Driver, Dsn: dsbSource, Prefix: global.App.Config.DBconf.Prefix})
+
+	// 持久化sql中间件
+	//engin.Use(gorose.DefaultLogger())
+	engin.Use(func(e *gorose.Engin) {
+		e.SetLogger(gorose.NewLogger(&gorose.LogOption{EnableSqlLog: true}))
+	})
+
 	if err != nil {
 		global.App.Log.Info(fmt.Sprintf("数据库连接实例错误: %v", err))
 	} else {

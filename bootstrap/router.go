@@ -31,7 +31,7 @@ func RunServer() {
 	if global.App.Config.App.Env == "dev" {
 		fmt.Printf("\n %c[1;40;32m%s%c[0m\n", 0x1B, "在浏览器访问：​​http://127.0.0.1:"+global.App.Config.App.Port+"/common/install/index ​进行​安装​", 0x1B)
 		r.Run(":" + global.App.Config.App.Port)
-	} else { //优雅-生成环境使用
+	} else { //优雅-生产环境使用
 		//换一种启动方式
 		srv := &http.Server{
 			Addr:    ":" + global.App.Config.App.Port,
