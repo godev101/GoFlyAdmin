@@ -125,7 +125,6 @@ type Response struct {
 	Message   string      `json:"message"`
 }
 
-// ServerError 此处参数需要用any，用interface{}会报nil转换错误
 func ServerError(c *gin.Context, err any) {
 	conf := global.App.Config
 	msg := "内部服务器错误"
@@ -133,10 +132,13 @@ func ServerError(c *gin.Context, err any) {
 		msg = err.(string)
 	} else {
 		if conf.App.Env != "pro" && os.Getenv(gin.EnvGinMode) != gin.ReleaseMode {
-			if _, ok := err.(error); ok {
-				msg = err.(error).Error()
-				global.App.Log.Error(msg)
-			}
+
+			global.App.Log.Error("-----------------------error------------------")
+
+			//if _, ok := err.(error); ok {
+			//	msg = err.(error).Error()
+			//	global.App.Log.Error(msg)
+			//}
 		} else {
 			str := fmt.Sprintf("内部服务器错误： %s\n", err.(error).Error()) //拼接字符串
 			global.App.Log.Error(str)

@@ -66,7 +66,8 @@ func InitRouter() *gin.Engine {
 		MaxAge:           12 * time.Hour,
 	}))
 	//1.错误日志
-	R.Use(gin.Logger(), middleware.CustomRecovery())
+	//R.Use(gin.Logger(), middleware.CustomRecovery())
+	R.Use(middleware.CustomLogger(global.App.Log), middleware.CustomRecovery())
 	//2.限流rate-limit 中间件
 	R.Use(middleware.LimitHandler())
 	//3.判断接口是否合法
