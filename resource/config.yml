@@ -24,7 +24,7 @@ app:
      #运行服务端口（根据您的实际情况修改）
      port: 8105
      #接口合法性验证
-     apisecret: gofly@2024
+     apisecret: gofly@888
      #接口JWT验证、跨域域名-不添加请求时报403 (开发、部署必改),部署域名时：“https://sg.goflys.cn”替换成您的域名
      allowurl: http://localhost:9101,http://localhost:9102,https://sg.goflys.cn
      #token超时时间单位分钟 
