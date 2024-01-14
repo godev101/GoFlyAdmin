@@ -21,9 +21,20 @@ func MyInit(starType interface{}) {
 
 	// 持久化sql中间件
 	//engin.Use(gorose.DefaultLogger())
+
 	engin.Use(func(e *gorose.Engin) {
-		e.SetLogger(gorose.NewLogger(&gorose.LogOption{EnableSqlLog: true}))
+		e.SetLogger(gorose.NewLogger(
+
+			&gorose.LogOption{
+				FilePath:       global.App.Config.Log.RootDir + "/" + global.App.Config.Log.Filename,
+				EnableSqlLog:   true,
+				EnableSlowLog:  1,
+				EnableErrorLog: true}),
+		)
 	})
+
+	// 将zap日志记录器与gorose集成
+	engin.SetLogger()
 
 	if err != nil {
 		global.App.Log.Info(fmt.Sprintf("数据库连接实例错误: %v", err))
