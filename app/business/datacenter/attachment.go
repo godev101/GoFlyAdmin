@@ -160,6 +160,14 @@ func (api *Attachment) Save(c *gin.Context) {
 		parameter["businessID"] = user.BusinessID
 		getcount, _ := model.DB().Table("business_attachment").Where("businessID", user.BusinessID).Where("pid", parameter["pid"]).Where("title", "like", fmt.Sprintf("%s%v%s", "%", parameter["title"], "%")).Count()
 		parameter["title"] = fmt.Sprintf("%s%v", parameter["title"], utils.InterfaceToInt(getcount)+1)
+
+		if parameter["name"] == nil {
+			parameter["name"] = parameter["title"]
+		}
+		if parameter["cover_url"] == nil {
+			parameter["cover_url"] = ""
+		}
+
 		addId, err := model.DB().Table("business_attachment").Data(parameter).InsertGetId()
 		if err != nil {
 			results.Failed(c, "添加失败", err)
