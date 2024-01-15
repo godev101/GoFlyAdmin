@@ -1,4 +1,4 @@
-package model
+package diy
 
 import (
 	"fmt"
@@ -19,8 +19,8 @@ var logger *zapLogger
 
 var logOnce sync.Once
 
-// NewLogger ...
-func NewLogger(zapLog *zap.Logger) *zapLogger {
+// NewGoroseZapLogger ...
+func NewGoroseZapLogger(zapLog *zap.Logger) *zapLogger {
 	logOnce.Do(func() {
 		logger = &zapLogger{z: zapLog}
 	})

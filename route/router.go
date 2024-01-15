@@ -11,10 +11,11 @@ import (
 	// _ "gofly/app/wxapp"
 	// _ "gofly/app/home"
 	_ "gofly/app"
+	"gofly/pkg/diy"
+	"gofly/route/middleware"
 	"net/http"
 
 	"gofly/global"
-	"gofly/route/middleware"
 	"strings"
 	"time"
 
@@ -67,7 +68,7 @@ func InitRouter() *gin.Engine {
 	}))
 	//1.错误日志
 	//R.Use(gin.Logger(), middleware.CustomRecovery())
-	R.Use(middleware.CustomLogger(global.App.Log), middleware.CustomRecovery())
+	R.Use(diy.GinZapLogger(global.App.Log), middleware.CustomRecovery())
 	//2.限流rate-limit 中间件
 	R.Use(middleware.LimitHandler())
 	//3.判断接口是否合法

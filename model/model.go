@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go.uber.org/zap"
 	"gofly/global"
+	"gofly/pkg/diy"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -36,7 +37,9 @@ func MyInit(starType interface{}) {
 	//	)
 	//})
 
-	goroseLog := NewLogger(global.App.Log.WithOptions(zap.AddCallerSkip(6)))
+	goroseLog := diy.NewGoroseZapLogger(
+		global.App.Log.WithOptions(zap.AddCallerSkip(6)),
+	)
 	engin.Use(func(e *gorose.Engin) {
 		e.SetLogger(goroseLog)
 	})
@@ -54,12 +57,12 @@ func MyInit(starType interface{}) {
 	}
 }
 
-// controller层调用
+// DB controller层调用
 func DB() gorose.IOrm {
 	return engin.NewOrm()
 }
 
-// 新建数据库
+// CreateDataBase 新建数据库
 func CreateDataBase(Username, Password, Hostname, Hostport, Database interface{}) {
 	global.App.Config.InitializeConfig()
 	dsbSource := fmt.Sprintf("%v:%v@tcp(%v:%v)/%v?charset=utf8mb4&parseTime=True&loc=Local&timeout=1000ms", Username, Password, Hostname, Hostport, "")
@@ -71,15 +74,15 @@ func CreateDataBase(Username, Password, Hostname, Hostport, Database interface{}
 	}
 }
 
-// 导入数据库文件
+// ExecSql 导入数据库文件
 func ExecSql(rows string) {
-	Result, error := engin.GetExecuteDB().Exec(rows)
-	if error != nil {
-		global.App.Log.Info(fmt.Sprintf("导入数据失败:%v。%v", error, Result))
+	Result, err := engin.GetExecuteDB().Exec(rows)
+	if err != nil {
+		global.App.Log.Info(fmt.Sprintf("导入数据失败:%v。%v", err, Result))
 	}
 }
 
-// 取得总行数
+// GetTotal 取得总行数
 func GetTotal(tablename string, wheres map[string]interface{}) int64 {
 	total, _ := DB().Table(tablename).Where(wheres).Count()
 	return total
