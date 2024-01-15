@@ -1,65 +1,75 @@
-package bootstrap
+package model
 
 import (
 	"fmt"
 	"github.com/gohouse/gorose/v2"
 	"go.uber.org/zap"
+	"sync"
 	"time"
 )
 
 // Logger ...
-type Logger struct {
+type zapLogger struct {
 	z *zap.Logger
 }
 
-var _ gorose.ILogger = (*Logger)(nil)
+var _ gorose.ILogger = (*zapLogger)(nil)
 
-var logger *Logger
+var logger *zapLogger
+
+var logOnce sync.Once
 
 // NewLogger ...
-func NewLogger(zapLog *zap.Logger) *Logger {
-	return &Logger{z: zapLog}
+func NewLogger(zapLog *zap.Logger) *zapLogger {
+	logOnce.Do(func() {
+		logger = &zapLogger{z: zapLog}
+	})
+	return logger
+
 }
 
 // EnableSqlLog ...
-func (l *Logger) EnableSqlLog() bool {
+func (l *zapLogger) EnableSqlLog() bool {
 	return true
 }
 
 // EnableErrorLog ...
-func (l *Logger) EnableErrorLog() bool {
+func (l *zapLogger) EnableErrorLog() bool {
 	return true
 }
 
 // EnableSlowLog ...
-func (l *Logger) EnableSlowLog() float64 {
+func (l *zapLogger) EnableSlowLog() float64 {
 	return 1
 }
 
 // Slow ...
-func (l *Logger) Slow(sqlStr string, runtime time.Duration) {
+func (l *zapLogger) Slow(sqlStr string, runtime time.Duration) {
 	if l.EnableSlowLog() > 0 && runtime.Seconds() > l.EnableSlowLog() {
 		logger.write(gorose.LOG_SLOW, sqlStr, runtime.String())
 	}
 }
 
 // Sql ...
-func (l *Logger) Sql(sqlStr string, runtime time.Duration) {
+func (l *zapLogger) Sql(sqlStr string, runtime time.Duration) {
 	if l.EnableSqlLog() {
 		logger.write(gorose.LOG_SQL, sqlStr, runtime.String())
 	}
 }
 
 // Error ...
-func (l *Logger) Error(msg string) {
+func (l *zapLogger) Error(msg string) {
 	if l.EnableErrorLog() {
 		logger.write(gorose.LOG_ERROR, msg, "0")
 	}
 }
 
-func (l *Logger) write(logLevel gorose.LogLevel, msg string, runtime string) {
+func (l *zapLogger) write(logLevel gorose.LogLevel, msg string, runtime string) {
 	content := fmt.Sprintf("[gorose-%v] %v --- %v\n", logLevel.String(), runtime, msg)
-	zapLog := l.z.WithOptions(zap.AddCallerSkip(1))
+	//fmt.Println(content)
+	// l.z.Info(content)
+	//zapLog := l.z.WithOptions(zap.AddCallerSkip(5))
+	zapLog := l.z
 	switch logLevel {
 	case gorose.LOG_SQL:
 		zapLog.Info(content)

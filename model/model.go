@@ -2,7 +2,7 @@ package model
 
 import (
 	"fmt"
-	"gofly/bootstrap"
+	"go.uber.org/zap"
 	"gofly/global"
 	"time"
 
@@ -36,8 +36,9 @@ func MyInit(starType interface{}) {
 	//	)
 	//})
 
+	goroseLog := NewLogger(global.App.Log.WithOptions(zap.AddCallerSkip(6)))
 	engin.Use(func(e *gorose.Engin) {
-		e.SetLogger(bootstrap.NewLogger(global.App.Log))
+		e.SetLogger(goroseLog)
 	})
 
 	// 将zap日志记录器与gorose集成
